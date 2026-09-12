@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday! 🎉</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night: #180F2A;
+    --night-2: #291B45;
+    --night-3: #3A2559;
+    --gold: #F5B942;
+    --coral: #FF7CA3;
+    --cream: #FFF6EA;
+    --lavender: #C9B8DE;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: radial-gradient(120% 90% at 50% -10%, var(--night-3) 0%, var(--night-2) 45%, var(--night) 100%);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .stars{
+    position: fixed; inset:0; pointer-events:none; z-index:0;
+  }
+  .star{
+    position:absolute; width:3px; height:3px; background: var(--cream);
+    border-radius:50%; opacity:.5; animation: twinkle 3.2s ease-in-out infinite;
+  }
+  @keyframes twinkle{ 0%,100%{opacity:.15;} 50%{opacity:.85;} }
+
+  /* ---------- HERO / ENVELOPE ---------- */
+  #hero{
+    position: relative; z-index:1;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding: 40px 20px;
+  }
+  .eyebrow{
+    font-family:'Fraunces', serif; font-style: italic; font-weight:500;
+    color: var(--lavender); font-size: 1.05rem; margin-bottom: 6px; letter-spacing: .02em;
+  }
+  .hero-title{
+    font-family:'Fraunces', serif; font-weight:700;
+    font-size: clamp(2.4rem, 8vw, 4.6rem);
+    line-height: 1.05; margin: 0 0 10px;
+    background: linear-gradient(100deg, var(--gold), var(--coral) 70%);
+    -webkit-background-clip: text; background-clip:text; color: transparent;
+  }
+  .hero-sub{
+    max-width: 420px; color: var(--lavender); font-size: 1.02rem; margin: 0 0 46px;
+  }
+
+  .envelope-wrap{ cursor:pointer; user-select:none; touch-action: manipulation; }
+  .envelope{
+    position:relative; width: 220px; height: 150px; margin: 0 auto;
+  }
+  .env-back{
+    position:absolute; inset:0;
+    background: linear-gradient(160deg, #FFDFB0, #FFC98A);
+    border-radius: 10px;
+    box-shadow: 0 20px 45px rgba(0,0,0,.45);
+  }
+  .env-letter{
+    position:absolute; left: 10px; right:10px; bottom: 8px; top: 26px;
+    background: var(--cream);
+    border-radius: 6px;
+    transform: translateY(0);
+    transition: transform .7s cubic-bezier(.2,.8,.2,1);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', serif; font-weight:600; color: var(--night-2); font-size: .95rem;
+  }
+  .env-flap{
+    position:absolute; top:0; left:0; right:0; height: 80px;
+    background: linear-gradient(160deg, #FFCB8E, #FF9F68);
+    clip-path: polygon(0 0, 100% 0, 50% 78%);
+    transform-origin: top center;
+    transition: transform .6s cubic-bezier(.2,.8,.2,1);
+    border-radius: 10px 10px 0 0;
+    z-index: 3;
+  }
+  .env-shine{
+    position:absolute; inset:0; border-radius:10px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.25);
+  }
+  .envelope.opening .env-flap{ transform: rotateX(180deg); }
+  .envelope.opening .env-letter{ transform: translateY(-70px); }
+
+  .tap-hint{
+    margin-top: 20px; color: var(--lavender); font-size: .82rem; letter-spacing:.03em;
+  }
+  .envelope-wrap:hover .env-back{ box-shadow: 0 24px 55px rgba(0,0,0,.55); }
+
+  #hero.hidden{ display:none; }
+
+  /* ---------- MAIN CONTENT ---------- */
+  #content{
+    position:relative; z-index:1; display:none;
+    max-width: 1080px; margin: 0 auto; padding: 70px 22px 100px;
+  }
+  #content.show{ display:block; animation: fadeUp .9s ease both; }
+  @keyframes fadeUp{ from{opacity:0; transform: translateY(18px);} to{opacity:1; transform:none;} }
+
+  .message{
+    text-align:center; margin-bottom: 64px;
+  }
+  .message .label{
+    font-family:'Fraunces', serif; font-style: italic; color: var(--coral); font-size:1.1rem;
+  }
+  .message h1{
+    font-family:'Fraunces', serif; font-weight:700;
+    font-size: clamp(2.1rem, 6vw, 3.4rem);
+    margin: 6px 0 18px; color: var(--cream);
+  }
+  .message p{
+    max-width: 560px; margin: 0 auto; color: var(--lavender); line-height:1.7; font-size: 1.02rem;
+  }
+
+  .wall-title{
+    font-family:'Fraunces', serif; font-weight:600; font-size: 1.6rem;
+    text-align:center; margin: 0 0 8px; color: var(--gold);
+  }
+  .wall-sub{
+    text-align:center; color: var(--lavender); font-size: .92rem; margin-bottom: 40px;
+  }
+
+  .gallery{
+    columns: 3 240px; column-gap: 16px;
+  }
+  .card{
+    break-inside: avoid; margin-bottom: 16px; position:relative;
+    border-radius: 14px; overflow:hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    transform: translateY(24px); opacity:0;
+    animation: pop .7s cubic-bezier(.2,.8,.2,1) forwards;
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  @keyframes pop{ to{ transform:none; opacity:1; } }
+  .card img{ width:100%; display:block; -webkit-user-drag: none; }
+  .card .cap{
+    position:absolute; left:0; right:0; bottom:0;
+    padding: 14px 12px 10px;
+    background: linear-gradient(0deg, rgba(15,9,26,.88), rgba(15,9,26,0));
+    font-size: .82rem; color: var(--cream); font-family:'Inter', sans-serif;
+    opacity: 0; transform: translateY(6px);
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  @media (hover: none){
+    .card .cap{ opacity: 1; transform: none; }
+    .card:hover .cap{ opacity: 1; transform: none; }
+    .card:hover img{ transform: none; }
+  }
+  @media (hover: hover){
+    .card:hover .cap{ opacity:1; transform:none; }
+    .card:hover img{ transform: scale(1.03); }
+  }
+  .card img{ transition: transform .5s ease; }
+
+  .closing{
+    text-align:center; margin-top: 70px;
+  }
+  .closing .big{
+    font-family:'Fraunces', serif; font-weight:700; font-style: italic;
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    background: linear-gradient(100deg, var(--coral), var(--gold));
+    -webkit-background-clip:text; background-clip:text; color: transparent;
+    margin-bottom: 10px;
+  }
+  .closing p{ color: var(--lavender); font-size: .95rem; }
+
+  .confetti-piece{
+    position: fixed; top: -10px; z-index: 5; pointer-events:none;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 480px){
+    .gallery{ columns: 1; }
+    .closing{ margin-top: 40px; }
+  }
+  @media (max-width: 620px){
+    .gallery{ columns: 2 160px; }
+  }
+  @media (min-width: 1400px){
+    #content{ padding: 70px 22px 120px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<section id="hero">
+  <div class="eyebrow">para nimo</div>
+  <h1 class="hero-title">May Gift<br>ka saakin</h1>
+  <p class="hero-sub">Bago ang lahat  i-tap lang kay exicted nako AHHAHAH. 🎁</p>
+
+  <div class="envelope-wrap" id="envelopeWrap">
+    <div class="envelope" id="envelope">
+      <div class="env-back"></div>
+      <div class="env-letter">Buksan mo ako 💌</div>
+      <div class="env-flap"></div>
+      <div class="env-shine"></div>
+    </div>
+  </div>
+  <div class="tap-hint">Abrihi ang sobre basin naay 1k</div>
+</section>
+
+<section id="content">
+  <div class="message">
+    <div class="label">Happy Birthday!</div>
+    <h1>Kay 20th naman ka aww,<br>tigulang na gyud ka.</h1>
+    <p>Unta malipay kaayo ka sa imong special day. Ampingi kanunay imong kaugalingon, ug hinaot daghan pa kaayong birthdays ang imong ma-celebrate uban sa mga tawong nahigugma nimo. Happy birthday, love u! 🎂
+. 🎂</p>
+  </div>
+
+  <div class="wall-title">The Wall of Memories</div>
+  <div class="wall-sub">i-hover lang ang mga picture</div>
+
+  <div class="gallery" id="gallery"></div>
+
+  <div class="closing">
+    <div class="big">Happy Birthday Kathlea 🎈</div>
+    <p>Enjoy your day! 🥳</p>
+  </div>
+</section>
+
+<script>
+const PHOTOS = [
+  { file: "5e619dcf-0c80-4ab7-acce-e3ca3a23bf40.jpg", cap: "Rooftop kiss-face, golden hour vibes ✨" },
+  { file: "3a6707e6-7a35-456a-adab-284f8412db34.jpg", cap: "Cozy morning, no filter needed 💕" },
+  { file: "724dbbc7-2a8c-4200-9261-85d0eb600628.jpg", cap: "Night out with the bestie 🌙" },
+  { file: "f472cc76-16e1-4a53-b24d-d7e5405567e5.jpg", cap: "Titas duty, always in frame 👶" },
+  { file: "5b2abbdf-1dff-4ebe-a5e4-fd657a556a87.jpg", cap: "Baguio breeze + cheeky tongue-out 🌲" },
+  { file: "b47ab3b6-0f78-4be4-aa85-b2f89c02b472.jpg", cap: "Chin-hand pose, effortlessly iconic 💁" },
+  { file: "6fb082df-0942-4fcd-99d8-0dd353bbad61.jpg", cap: "Sunny day, sulky face, still cute 😄" },
+  { file: "be052008-118a-454d-96fb-181abdb90faa.jpg", cap: "Bus ride silliness 🚌" },
+  { file: "930d1a3f-2c57-45c8-8b31-75131f1fca3c.jpg", cap: "Glam mode: activated ✨" },
+  { file: "0f97c87f-e0d5-4c8b-9186-45d71d96552a.jpg", cap: "Merienda date, forever a mood 🍗" }
+];
+
+// stars
+const starsEl = document.getElementById('stars');
+for(let i=0;i<60;i++){
+  const s = document.createElement('div');
+  s.className='star';
+  s.style.left = Math.random()*100+'%';
+  s.style.top = Math.random()*100+'%';
+  s.style.animationDelay = (Math.random()*3)+'s';
+  starsEl.appendChild(s);
+}
+
+function buildGallery(images){
+  const gallery = document.getElementById('gallery');
+  PHOTOS.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.style.animationDelay = (i*0.08)+'s';
+    div.innerHTML = `<img src="${images[p.file]}" alt="memory"><div class="cap">${p.cap}</div>`;
+    gallery.appendChild(div);
+  });
+}
+
+function confettiBurst(){
+  const colors = ['#F5B942','#FF7CA3','#C9B8DE','#FFF6EA','#FF9F68'];
+  for(let i=0;i<90;i++){
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    const size = 6 + Math.random()*6;
+    el.style.width = size+'px';
+    el.style.height = (size*0.4)+'px';
+    el.style.background = colors[Math.floor(Math.random()*colors.length)];
+    el.style.left = Math.random()*100+'vw';
+    const duration = 2.4 + Math.random()*1.8;
+    const rotate = Math.random()*720 - 360;
+    el.style.transform = `rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(el);
+    el.animate([
+      { transform: `translateY(0) rotate(0deg)`, opacity: 1 },
+      { transform: `translateY(100vh) rotate(${rotate}deg)`, opacity: 0.9 }
+    ], { duration: duration*1000, easing: 'cubic-bezier(.2,.6,.3,1)' });
+    setTimeout(()=> el.remove(), duration*1000 + 100);
+  }
+}
+
+document.getElementById('envelopeWrap').addEventListener('click', function(){
+  const env = document.getElementById('envelope');
+  if(env.classList.contains('opening')) return;
+  env.classList.add('opening');
+  confettiBurst();
+  setTimeout(()=>{
+    document.getElementById('hero').classList.add('hidden');
+    document.getElementById('content').classList.add('show');
+    window.scrollTo({top:0, behavior:'instant'});
+  }, 750);
+});
+
+window.__PHOTOS_READY__ = function(images){
+  buildGallery(images);
+};
+</script>
+<script src="images.js"></script>
+</body>
+</html>
